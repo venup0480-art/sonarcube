@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "scan:sonar": "sonar-scanner",
+    "scan:snyk": "snyk test --all-projects"
   },
   "dependencies": {
     "react": "^19.2.0",
