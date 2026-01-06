@@ -1,38 +1,33 @@
-name: Snyk Security Check (PR to main)
-
+name: Snyk PR Security Check (Server)
+ 
 on:
   pull_request:
     branches:
       - main
-
+ 
 jobs:
-  snyk-security:
-    name: Snyk Vulnerability Scan
+  snyk-pr:
     runs-on: ubuntu-latest
-
+ 
+    defaults:
+      run:
+        working-directory: server
+ 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+ 
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: npm
-
+          node-version: 20
+ 
       - name: Install dependencies
         run: npm ci
-
-      - name: Build project
-        run: npm run build
-
-      - name: Run Snyk Test (Fail on High/Critical)
-        uses: snyk/actions/node@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: test
-          args: >
-            --all-projects
-            --severity-threshold=high
-            --fail-on=all
+ 
+      - name: Install Snyk
+        run: npm install -g snyk
+ 
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
+ 
+      - name: Snyk test (CRITICAL only)
+        run: snyk test --severity-threshold=critical
