@@ -4,6 +4,7 @@ function App() {
   const users = [
     { id: 1, name: "Venu" },
     { id: 2, name: "Raj" },
+    { id: 3, name: "Vinay" }
   ];
 
   return (
