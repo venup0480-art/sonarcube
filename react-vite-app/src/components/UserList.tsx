@@ -9,7 +9,7 @@ type UserListProps = {
   users: any;       // ❌ any instead of typed array
 };
 
-const UserList = (props: UserListProps) => {
+const UserListComponent = (props: UserListProps) => {
   // ❌ No null check
   if (props.users.length == 0) {   // ❌ == instead of ===
     console.log("No users");       // ❌ console.log
@@ -27,4 +27,4 @@ const UserList = (props: UserListProps) => {
   );
 };
 
-export default UserList;
+export default UserListComponent;
