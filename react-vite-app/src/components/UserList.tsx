@@ -1,21 +1,27 @@
+import React from "react";
+
 type User = {
-  id: number;
+  id: any;          // ❌ using any
   name: string;
 };
 
 type UserListProps = {
-  users: User[];
+  users: any;       // ❌ any instead of typed array
 };
 
-const UserList = ({ users }: UserListProps) => {
-  if (!users.length) {
+const UserList = (props: UserListProps) => {
+  // ❌ No null check
+  if (props.users.length == 0) {   // ❌ == instead of ===
+    console.log("No users");       // ❌ console.log
     return <p>No users found</p>;
   }
 
   return (
     <ul>
-      {users.map((user) => (
-        <li key={user.id}>{user.name}</li>
+      {props.users.map((user: any, index: number) => (
+        <li key={index}>           
+          {user.name.toUpperCase()}
+        </li>
       ))}
     </ul>
   );
